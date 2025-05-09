@@ -19,15 +19,15 @@ def lambda_handler(event, context):
     ec2 = boto3.client('ec2')
     sns = boto3.client('sns')
 
-    one_day_ago = datetime.datetime.utcnow() - datetime.timedelta(days=1)
+    seven_days_ago = datetime.datetime.utcnow() - datetime.timedelta(days=7)
 
     # Get unattached volumes
     volumes = ec2.describe_volumes(Filters=[{'Name': 'status', 'Values': ['available']}])['Volumes']
-    stale_volumes = [v['VolumeId'] for v in volumes if v['CreateTime'].replace(tzinfo=None) < one_day_ago]
+    stale_volumes = [v['VolumeId'] for v in volumes if v['CreateTime'].replace(tzinfo=None) < seven_days_ago]
 
     # Get old snapshots
     snapshots = ec2.describe_snapshots(OwnerIds=['self'])['Snapshots']
-    stale_snapshots = [s['SnapshotId'] for s in snapshots if s['StartTime'].replace(tzinfo=None) < one_day_ago]
+    stale_snapshots = [s['SnapshotId'] for s in snapshots if s['StartTime'].replace(tzinfo=None) < seven_days_ago]
 
     # Check if there are stale resources
     if not stale_volumes and not stale_snapshots:
