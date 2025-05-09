@@ -7,7 +7,7 @@
 ## step3. make sure to attach IAM role which have the access of ec2 instances describe, snapshots describe, volumes describe, cloudwatch full access, sns full acess to your lambda function.
 ## step4. create a sns topic/subscription which will send the notification based on your configuration.
 ## step5. check the email id which you have given in sns subscription and subscribe that.
-## step6. create a aws enentbridge which will help you to trigger this lambda function on your behalf based on your timing and configuration.
+## step6. create a aws eventbridge which will help you to trigger this lambda function on your behalf based on your timing and configuration.
 ## step7. once successfully deploy this project check your mail box whether you are getting the email or not. 
 
 ## You will get the email on your email id if there is any stale resources found. if there is no any stale resource you will get the mail with message = "Your account is in a very good state as there are no stale resources."
